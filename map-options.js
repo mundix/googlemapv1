@@ -1,5 +1,3 @@
-//Namespace:  Mapster
-//como estasmo usando google dentro de esta libreria, debemos agregarlo tambien
 (function(window,google,mapster){
     mapster.MAP_OPTIONS = {
         center: {

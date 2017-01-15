@@ -3,24 +3,22 @@
     var options = mapster.MAP_OPTIONS;
     element = document.getElementById("map");
     map = Mapster.create(element,options);
-    // map.addMarker(19.450913,-70.694669,true);
-//        Vamos a trabajr con los eventos del marker
-//    Vamos a hacero mas user friendly, que sepamos que estamos pasando a la funcion
-    map.addMarker({
+    var marker = map.addMarker({
         lat:19.450913,
         lng:-70.694669,
-        draggable:true,
-    //    Crearemos un event obj
-        event: {
-            name: 'dragend',
-            callback: function(){
-                console.log("dragend");
-            }
-        }
-
+        content: "<div style='color:red'>Me gusta la comida</div>",
+        draggable:true
+        // icon: ''
     });
-//    Ahora que tenemos los custom options, vamos a pasar los custom events
+    var marker2 = map.addMarker({
+        lat:19.430912,
+        lng:-70.694669,
+        content: 'Me gusta!!',
+        // icon: ''
+    });
 
 
 
 }(window,window.Mapster || (window.Mapster = {})));
+
+//Ahora vamos a trabajr los infowindows , cuando se hace click en el marker
