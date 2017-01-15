@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBslDx6CsSJIpdAJ9oEe2Hu_xpCET8Q1lE"></script>
+    <script>
+        google.maps.event.addDomListener(window,'load',initialize);
+
+        function initialize()
+        {
+            var autocomplete = new google.maps.places.Autocomplete(document.getElementById('txtAutocomplete'));
+            google.maps.event.addListener(autocomplete,'place_changed',function(){
+                var place = autocomplete.getPlace();
+                var location = "<b>Location: </b>"+place.formatted_address+"<br/>";
+                location += "<b>Latitude: </b>"+place.geometry.location.lat()+"<br/>";
+                location += "<b>Longitude: </b>"+place.geometry.location.lng()+"<br/>";
+                document.getElementById('lblresult').innerHTML = location;
+//                console.log(place);
+            });
+
+        }
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,body,#map
+        {
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+        }
+        #txtAutocomplete
+        {
+            width: 90%;
+            padding: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <span>Ubicación:</span><input type="text" id="txtAutocomplete" placeholder="Escriba su ubicación..."/>
+    <label for="" id="lblresult"></label>
+    <div id="map"></div>
+</body>
+</html>
