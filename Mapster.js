@@ -14,13 +14,26 @@
                     return this.gMap.getZoom();
                 }
             },
-            //Estro es privado en esta libreria
             _on:function(event,callback){
                 // google.maps.event.addListener(this.gMap,event,callback);
                 var self = this;
                 google.maps.event.addListener(this.gMap,event,function(e){
                     callback.call(self,e);
                 });
+            },
+            addMarker: function(lat,lng,draggable){
+              this._createMarker(lat,lng,draggable);
+            },
+            _createMarker: function(lat,lng,draggable){
+                var opts = {
+                    position: {
+                        lat: lat,
+                        lng: lng
+                    },
+                    map: this.gMap,
+                    draggable:draggable
+                }
+                return new google.maps.Marker(opts);
             }
         };
         return Mapster;
