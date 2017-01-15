@@ -3,6 +3,7 @@
     var Mapster = (function(){
         function Mapster(element,opts){
             this.gMap = new google.maps.Map(element,opts);
+            this.markers = [];
         }
         Mapster.prototype = {
             zoom:function(level)
@@ -26,7 +27,10 @@
                     lat: opts.lat,
                     lng: opts.lng,
                 };
+
                 marker = this._createMarker(opts);
+                this._addMarker(marker); //Agregando el marker al array
+
                 if(opts.event)
                 {
                     this._on({
@@ -45,16 +49,40 @@
                             var infoWindow = new google.maps.InfoWindow({
                                 content: opts.content
                             });
-                            infoWindow.open(map.gMap, marker); //Vamos a a gregarl en la libreria
+                            infoWindow.open(map.gMap, marker);
                         }
                     })
                 }
-            //    vamos a agrregar que retorne el Marker
                 return marker;
+            },
+            findMarkerByLat: function(lat)
+            {
+                var i = 0;
+                for(;i<this.markers.length;i++)
+                {
+                    var marker = this.markers[i];
+                    if(marker.position.lat() === lat)
+                    {
+                        return marker;
+                    }
+                }
             },
             _createMarker: function(opts){
                 opts.map = this.gMap;
                 return new google.maps.Marker(opts);
+            },
+            _addMarker: function(marker)
+            {
+                this.markers.push(marker);
+            },
+            _removeMarker:function(marker)
+            {
+                var indexOf = this.markers.indexOf(marker);
+                if(indexOf  !== -1)
+                {
+                    this.markers.splice(indexOf,1);
+                    marker.setMap(null);
+                }
             }
         };
         return Mapster;
