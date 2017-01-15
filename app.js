@@ -16,17 +16,10 @@
         content: 'Me gusta!!',
         // icon: ''
     });
-    // map._removeMarker(marker2);
-    // console.log(map.markers);
     var found = map.findMarkerByLat(19.450913);
     console.log(found);
 
 }(window,window.Mapster || (window.Mapster = {})));
 
-//Ahora vamso a tratar de ir guarando los markers , esto es util para las db,
-// vamos a usar un array en el Module Mapster
-
-//Para agregar lo haremos con un array y para borrar lo harecmos
-//ubicando el indice que hay que remover
-
-//Vamos a crear una funcion que buste un Marker By Lat -> findMarkerByLat(lat)
+//Vamos a crear un Mudule, que pueda manejar cualquier tipo de objeto
+//Crearemo un file "List.js"
