@@ -1,9 +1,9 @@
 //Todo esto es un Module  como en ruby
-(function(window,google){
+(function(window,google,List){
     var Mapster = (function(){
         function Mapster(element,opts){
             this.gMap = new google.maps.Map(element,opts);
-            this.markers = [];
+            this.markers = List.create();
         }
         Mapster.prototype = {
             zoom:function(level)
@@ -27,10 +27,8 @@
                     lat: opts.lat,
                     lng: opts.lng,
                 };
-
                 marker = this._createMarker(opts);
-                this._addMarker(marker); //Agregando el marker al array
-
+                this.markers.add(marker); //usando la libreria nueva "List"
                 if(opts.event)
                 {
                     this._on({
@@ -55,6 +53,18 @@
                 }
                 return marker;
             },
+            findBy: function(callback)
+            {
+                this.markers.find(callback);
+            },
+            removeBy: function(callback)
+            {
+                this.markers.find(callback,function(markers){
+                    markers.forEach(function(marker){
+                        marker.setMap(null);
+                    });
+                });
+            },
             findMarkerByLat: function(lat)
             {
                 var i = 0;
@@ -71,19 +81,20 @@
                 opts.map = this.gMap;
                 return new google.maps.Marker(opts);
             },
-            _addMarker: function(marker)
-            {
-                this.markers.push(marker);
-            },
-            _removeMarker:function(marker)
-            {
-                var indexOf = this.markers.indexOf(marker);
-                if(indexOf  !== -1)
-                {
-                    this.markers.splice(indexOf,1);
-                    marker.setMap(null);
-                }
-            }
+            //Deprecated, can remove it now
+            // _addMarker: function(marker)
+            // {
+            //     this.markers.push(marker);
+            // },
+            // _removeMarker:function(marker)
+            // {
+            //     var indexOf = this.markers.indexOf(marker);
+            //     if(indexOf  !== -1)
+            //     {
+            //         this.markers.splice(indexOf,1);
+            //         marker.setMap(null);
+            //     }
+            // }
         };
         return Mapster;
     }());
@@ -92,4 +103,4 @@
         return new Mapster(element,opts);
     }
     window.Mapster = Mapster;
-}(window,google));
+}(window,google,List));
