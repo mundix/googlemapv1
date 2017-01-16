@@ -4,6 +4,7 @@
         function Mapster(element,opts){
             this.gMap = new google.maps.Map(element,opts);
             this.markers = List.create();
+            this.markerCluster = new MarkerClusterer(this.gMap,[],{imagePath: './js/markerclusters/images/m'});
         }
         Mapster.prototype = {
             zoom:function(level)
@@ -28,7 +29,8 @@
                     lng: opts.lng,
                 };
                 marker = this._createMarker(opts);
-                this.markers.add(marker); //usando la libreria nueva "List"
+                this.markers.add(marker);
+                this.markerCluster.addMarker(marker);
                 if(opts.event)
                 {
                     this._on({
@@ -37,7 +39,6 @@
                         callback:   opts.event.callback
                     });
                 }
-
                 if(opts.content)
                 {
                     this._on({
@@ -81,20 +82,6 @@
                 opts.map = this.gMap;
                 return new google.maps.Marker(opts);
             },
-            //Deprecated, can remove it now
-            // _addMarker: function(marker)
-            // {
-            //     this.markers.push(marker);
-            // },
-            // _removeMarker:function(marker)
-            // {
-            //     var indexOf = this.markers.indexOf(marker);
-            //     if(indexOf  !== -1)
-            //     {
-            //         this.markers.splice(indexOf,1);
-            //         marker.setMap(null);
-            //     }
-            // }
         };
         return Mapster;
     }());
